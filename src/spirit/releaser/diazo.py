@@ -9,6 +9,7 @@ import os
 import pkg_resources
 import shutil
 import tempfile
+import zest.releaser.choose
 import zipfile
 
 
@@ -104,3 +105,12 @@ def create_zipfile(src, dist, package_name):
                 zf.write(path, path)
     # Close file to write to disk.
     zf.close()
+
+
+def main():
+    vcs = zest.releaser.choose.version_control()
+    data = {
+        'name': vcs.name,
+        'workingdir': os.getcwd(),
+    }
+    release_diazo(data)
