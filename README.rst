@@ -44,7 +44,7 @@ Use in a buildout
     parts += releaser
 
     [releaser]
-    recipe = z3c.recipe.scripts
+    recipe = zc.recipe.egg:scripts
     dependent-scripts = true
     eggs =
         spirit.releaser
@@ -74,7 +74,7 @@ You can also install ``spirit.releaser`` in a virtualenv.::
 
 You can also install the latest version of ``spirit.releaser`` directly from GitHub::
 
-    $ pip install -e git@github.com:it-spirit/spirit.releaser.git#egg=spirit.releaser
+    $ pip install -e git+git@github.com:it-spirit/spirit.releaser.git#egg=spirit.releaser
 
 Now you can use it like this (when releasing your package)::
 
