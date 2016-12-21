@@ -29,10 +29,16 @@ setup(
         "Natural Language :: English",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
         "Topic :: Software Development :: Code Generators",
         "Topic :: Utilities",
     ],
-    keywords='',
+    keywords=[
+        'diazo',
+        'packaging,'
+        'releasing',
+    ],
     author='it-spirit',
     author_email='info@it-spir.it',
     url='https://github.com/it-spirit/spirit.releaser',
