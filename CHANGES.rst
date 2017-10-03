@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.4 (unreleased)
+0.4 (2017-10-03)
 ----------------
 
 - Save zip file in parent directory.
