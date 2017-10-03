@@ -4,7 +4,7 @@ Changelog
 0.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Change directory again after file has been created.
 
 
 0.2 (2016-12-21)
