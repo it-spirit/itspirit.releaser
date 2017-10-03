@@ -20,6 +20,7 @@ SECTION = 'spirit.releaser'
 OPTION_ENABLED = 'diazo_export.enabled'
 OPTION_DIAZO_PATH = 'diazo_export.path'
 OPTION_TITLE_UPDATE = 'diazo_export.adjust_title'
+OPTION_PARAM_THEME_VERSION = 'diazo_export.adjust_theme_version'
 
 
 def release_diazo(data):
@@ -67,6 +68,8 @@ def release_diazo(data):
     if has_manifest:
         if config.has_option(SECTION, OPTION_TITLE_UPDATE):
             _update_title(config, manifest_file, package_name)
+        if config.has_option(SECTION, OPTION_PARAM_THEME_VERSION):
+            _update_param_theme_version(config, manifest_file, package_name)
 
     create_zipfile(tmp_folder, data.get('workingdir'), package_name)
     shutil.rmtree(tmp_folder)
@@ -87,6 +90,28 @@ def _update_title(config, manifest_file, package_name):
     version = pkg_resources.get_distribution(package_name).version
     title = manifest.get('theme', 'title')
     manifest.set('theme', 'title', ' '.join([title, version]))
+    with open(manifest_file, 'wb') as configfile:
+        manifest.write(configfile)
+
+
+def _update_param_theme_version(config, manifest_file, package_name):
+    """Update the 'theme_version' param."""
+    try:
+        do_update = config.getboolean(SECTION, OPTION_PARAM_THEME_VERSION)
+    except ValueError:
+        return
+
+    if not do_update:
+        return
+
+    manifest = ConfigParser()
+    manifest.read(manifest_file)
+    version = pkg_resources.get_distribution(package_name).version
+    manifest.set(
+        'theme:parameters',
+        'theme_version',
+        'string:{0}'.format(version),
+    )
     with open(manifest_file, 'wb') as configfile:
         manifest.write(configfile)
 

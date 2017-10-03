@@ -5,6 +5,7 @@ Changelog
 ----------------
 
 - Save zip file in parent directory.
+- Add option to update the 'theme_version' param.
 
 
 0.3 (2017-10-03)

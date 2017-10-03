@@ -19,8 +19,9 @@ Use the following options in your ``setup.cfg`` to enable the ZIP file export::
 
     [spirit.releaser]
     diazo_export.enabled = 1
-    diazo_export.path = src/my/package/diazo_resources
+    diazo_export.path = src/my/package/theme
     diazo_export.adjust_title = 1
+    diazo_export.adjust_theme_version = 1
 
 diazo_export.enabled
     Activate or deactivate the export.
@@ -30,6 +31,9 @@ diazo_export.path
 
 diazo_export.adjust_title
     Append the version number of the package to the title in the zipped ``manifest.cfg`` file.
+
+diazo_export.adjust_theme_version
+    Add or update the ``theme_version`` parameter with the current version number of the package.
 
 
 Installation
