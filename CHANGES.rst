@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.3 (unreleased)
+0.3 (2017-10-03)
 ----------------
 
 - Change directory again after file has been created.
