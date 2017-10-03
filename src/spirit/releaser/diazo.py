@@ -86,7 +86,7 @@ def release_diazo(data):
 
 
 def create_zipfile(src, dist, package_name):
-    """Creates a ZIP file """
+    """Create a ZIP file."""
     # Work on the source root dir.
     os.chdir(src)
 
@@ -105,9 +105,11 @@ def create_zipfile(src, dist, package_name):
                 zf.write(path, path)
     # Close file to write to disk.
     zf.close()
+    os.chdir(dist)
 
 
 def main():
+    """Run Diazo releaser."""
     vcs = zest.releaser.choose.version_control()
     data = {
         'name': vcs.name,
