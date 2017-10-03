@@ -75,21 +75,20 @@ def release_diazo(data):
 def _update_title(config, manifest_file, package_name):
     """Update the title of the theme."""
     try:
-        config.getboolean(SECTION, OPTION_TITLE_UPDATE)
+        do_update = config.getboolean(SECTION, OPTION_TITLE_UPDATE)
     except ValueError:
         return
-    else:
-        if utils.ask(
-            'Add version number to the theme title in exported zip file?',
-            default=True,
-        ):
-            manifest = ConfigParser()
-            manifest.read(manifest_file)
-            version = pkg_resources.get_distribution(package_name).version
-            title = manifest.get('theme', 'title')
-            manifest.set('theme', 'title', ' '.join([title, version]))
-            with open(manifest_file, 'wb') as configfile:
-                manifest.write(configfile)
+
+    if not do_update:
+        return
+
+    manifest = ConfigParser()
+    manifest.read(manifest_file)
+    version = pkg_resources.get_distribution(package_name).version
+    title = manifest.get('theme', 'title')
+    manifest.set('theme', 'title', ' '.join([title, version]))
+    with open(manifest_file, 'wb') as configfile:
+        manifest.write(configfile)
 
 
 def create_zipfile(src, dist, package_name):
