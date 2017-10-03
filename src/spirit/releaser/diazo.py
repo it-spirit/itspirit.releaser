@@ -94,7 +94,8 @@ def create_zipfile(src, dist, package_name):
     filename = package_name + '.zip'
 
     # We need the full path.
-    filename = os.path.join(dist, filename)
+    parent = os.path.abspath(os.path.join(dist, os.pardir))
+    filename = os.path.join(parent, filename)
     logger.info('Creating zip file at: {0}'.format(filename))
 
     zf = zipfile.ZipFile(filename, 'w')
