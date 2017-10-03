@@ -62,7 +62,14 @@ def release_diazo(data):
     tmp_folder = tempfile.mkdtemp()
     diazo_folder = os.path.join(tmp_folder, package_name)
     shutil.copytree(path, diazo_folder)
+    update_manifest(config, diazo_folder, package_name)
 
+    create_zipfile(tmp_folder, data.get('workingdir'), package_name)
+    shutil.rmtree(tmp_folder)
+
+
+def update_manifest(config, diazo_folder, package_name):
+    """Update the manifest file."""
     manifest_file = os.path.join(diazo_folder, 'manifest.cfg')
     has_manifest = os.path.exists(manifest_file)
     if has_manifest:
@@ -70,9 +77,6 @@ def release_diazo(data):
             _update_title(config, manifest_file, package_name)
         if config.has_option(SECTION, OPTION_PARAM_THEME_VERSION):
             _update_param_theme_version(config, manifest_file, package_name)
-
-    create_zipfile(tmp_folder, data.get('workingdir'), package_name)
-    shutil.rmtree(tmp_folder)
 
 
 def _update_title(config, manifest_file, package_name):
