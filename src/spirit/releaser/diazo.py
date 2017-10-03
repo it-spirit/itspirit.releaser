@@ -107,6 +107,8 @@ def _update_param_theme_version(config, manifest_file, package_name):
     manifest = ConfigParser()
     manifest.read(manifest_file)
     version = pkg_resources.get_distribution(package_name).version
+    if not manifest.has_section('theme:parameters'):
+        manifest.add_section('theme:parameters')
     manifest.set(
         'theme:parameters',
         'theme_version',
