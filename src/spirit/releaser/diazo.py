@@ -31,7 +31,7 @@ def _check_config(data):
     config.read(SETUP_CONFIG_FILE)
 
     if not config.has_option(SECTION, OPTION_ENABLED):
-        return False
+        return False, None
 
     try:
         enabled = config.getboolean(SECTION, OPTION_ENABLED)
@@ -39,20 +39,20 @@ def _check_config(data):
         pass
 
     if not enabled:
-        return False
+        return False, None
 
     if not config.has_option(SECTION, OPTION_DIAZO_PATH):
-        return False
+        return False, None
 
     path = config.get(SECTION, OPTION_DIAZO_PATH)
     if path is None:
-        return False
+        return False, path
 
     if not os.path.exists(path):
         logger.warning(
             'Configured diazo path "{0}" does not exist.'.format(path)
         )
-        return False
+        return False, path
 
     return config, path
 
