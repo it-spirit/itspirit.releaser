@@ -4,7 +4,7 @@ Changelog
 0.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Fix return value check.
 
 
 0.5 (2017-10-11)

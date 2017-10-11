@@ -81,6 +81,8 @@ def release_diazo(data):
         return
 
     config, path = _check_config(data)
+    if not config:
+        return
 
     if not utils.ask('Create a zip file of the Diazo Theme?', default=True):
         return
