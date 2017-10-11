@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.5 (unreleased)
+0.5 (2017-10-11)
 ----------------
 
 - Add new prerelease hook to update the 'theme_version' param.
