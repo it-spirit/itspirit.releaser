@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.6 (unreleased)
-----------------
+0.5.1 (2017-10-11)
+------------------
 
 - Fix return value check.
 
