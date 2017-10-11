@@ -23,16 +23,15 @@ OPTION_TITLE_UPDATE = 'diazo_export.adjust_title'
 OPTION_PARAM_THEME_VERSION = 'diazo_export.adjust_theme_version'
 
 
-def release_diazo(data):
-    """Release a diazo theme from a folder."""
+def _check_config(data):
     if not os.path.exists(SETUP_CONFIG_FILE):
-        return
+        return False
 
     config = ConfigParser()
     config.read(SETUP_CONFIG_FILE)
 
     if not config.has_option(SECTION, OPTION_ENABLED):
-        return
+        return False
 
     try:
         enabled = config.getboolean(SECTION, OPTION_ENABLED)
@@ -40,20 +39,48 @@ def release_diazo(data):
         pass
 
     if not enabled:
-        return
+        return False
 
     if not config.has_option(SECTION, OPTION_DIAZO_PATH):
-        return
+        return False
 
     path = config.get(SECTION, OPTION_DIAZO_PATH)
     if path is None:
-        return
+        return False
 
     if not os.path.exists(path):
         logger.warning(
-            'Diazo path does not exist. We can not create a zip file.'
+            'Configured diazo path "{0}" does not exist.'.format(path)
         )
+        return False
+
+    return config, path
+
+
+def update_version(data):
+    """Update the version number."""
+    config, path = _check_config(data)
+    if not config:
         return
+
+    workingdir = data.get('workingdir')
+    diazo_folder = os.path.join(workingdir, path)
+    manifest_file = os.path.join(diazo_folder, 'manifest.cfg')
+    has_manifest = os.path.exists(manifest_file)
+    if not has_manifest:
+        return
+
+    version = data.get('new_version')
+    if config.has_option(SECTION, OPTION_PARAM_THEME_VERSION):
+        _update_param_theme_version(config, manifest_file, version)
+
+
+def release_diazo(data):
+    """Release a diazo theme from a folder."""
+    if not os.path.exists(SETUP_CONFIG_FILE):
+        return
+
+    config, path = _check_config(data)
 
     if not utils.ask('Create a zip file of the Diazo Theme?', default=True):
         return
@@ -75,8 +102,6 @@ def update_manifest(config, diazo_folder, package_name):
     if has_manifest:
         if config.has_option(SECTION, OPTION_TITLE_UPDATE):
             _update_title(config, manifest_file, package_name)
-        if config.has_option(SECTION, OPTION_PARAM_THEME_VERSION):
-            _update_param_theme_version(config, manifest_file, package_name)
 
 
 def _update_title(config, manifest_file, package_name):
@@ -98,7 +123,7 @@ def _update_title(config, manifest_file, package_name):
         manifest.write(configfile)
 
 
-def _update_param_theme_version(config, manifest_file, package_name):
+def _update_param_theme_version(config, manifest_file, version):
     """Update the 'theme_version' param."""
     try:
         do_update = config.getboolean(SECTION, OPTION_PARAM_THEME_VERSION)
@@ -110,7 +135,6 @@ def _update_param_theme_version(config, manifest_file, package_name):
 
     manifest = ConfigParser()
     manifest.read(manifest_file)
-    version = pkg_resources.get_distribution(package_name).version
     if not manifest.has_section('theme:parameters'):
         manifest.add_section('theme:parameters')
     manifest.set(

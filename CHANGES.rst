@@ -4,7 +4,7 @@ Changelog
 0.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Add new prerelease hook to update the 'theme_version' param.
 
 
 0.4 (2017-10-03)

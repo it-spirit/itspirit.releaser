@@ -65,5 +65,8 @@ setup(
         'zest.releaser.releaser.after': [
             'release_diazo=spirit.releaser.diazo:release_diazo',
         ],
+        'zest.releaser.prereleaser.middle': [
+            'update_version=spirit.releaser.diazo:update_version',
+        ],
     },
 )
