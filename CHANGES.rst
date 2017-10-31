@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.6 (unreleased)
+0.6 (2017-10-31)
 ----------------
 
 - Add postrelease hook to change 'theme_version' param back to development version.
