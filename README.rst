@@ -22,6 +22,7 @@ Use the following options in your ``setup.cfg`` to enable the ZIP file export::
     diazo_export.path = src/my/package/theme
     diazo_export.adjust_title = 1
     diazo_export.adjust_theme_version = 1
+    diazo_export.theme_name = mypackage
 
 diazo_export.enabled
     Activate or deactivate the export.
@@ -34,6 +35,10 @@ diazo_export.adjust_title
 
 diazo_export.adjust_theme_version
     Add or update the ``theme_version`` parameter with the current version number of the package.
+
+diazo_export.theme_name
+    Add a custom name for the theme folder and exported zip file.
+    Use this is you have a different name (id) for your theme, e.g. 'mypackage' instead of 'my.package'.
 
 
 Installation

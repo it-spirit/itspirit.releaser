@@ -21,6 +21,7 @@ OPTION_ENABLED = 'diazo_export.enabled'
 OPTION_DIAZO_PATH = 'diazo_export.path'
 OPTION_TITLE_UPDATE = 'diazo_export.adjust_title'
 OPTION_PARAM_THEME_VERSION = 'diazo_export.adjust_theme_version'
+OPTION_THEME_NAME = 'diazo_export.theme_name'
 
 
 def _check_config(data):
@@ -93,7 +94,11 @@ def release_diazo(data):
     shutil.copytree(path, diazo_folder)
     update_manifest(config, diazo_folder, package_name)
 
-    create_zipfile(tmp_folder, data.get('workingdir'), package_name)
+    if config.has_option(SECTION, OPTION_THEME_NAME):
+        zip_name = config.get(SECTION, OPTION_THEME_NAME)
+    else:
+        zip_name = package_name
+    create_zipfile(tmp_folder, data.get('workingdir'), zip_name)
     shutil.rmtree(tmp_folder)
 
 
@@ -148,13 +153,13 @@ def _update_param_theme_version(config, manifest_file, version):
         manifest.write(configfile)
 
 
-def create_zipfile(src, dist, package_name):
+def create_zipfile(src, dist, zip_name):
     """Create a ZIP file."""
     # Work on the source root dir.
     os.chdir(src)
 
     # Prepare the zip file name
-    filename = package_name + '.zip'
+    filename = zip_name + '.zip'
 
     # We need the full path.
     parent = os.path.abspath(os.path.join(dist, os.pardir))

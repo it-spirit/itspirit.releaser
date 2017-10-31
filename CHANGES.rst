@@ -5,6 +5,7 @@ Changelog
 ----------------
 
 - Add postrelease hook to change 'theme_version' param back to development version.
+- Add option 'diazo_export.theme_name' to adjust the theme name if this one is different from the package name.
 
 
 0.5.1 (2017-10-11)
