@@ -70,7 +70,7 @@ def update_version(data):
     if not has_manifest:
         return
 
-    version = data.get('new_version')
+    version = data.get('dev_version', data.get('new_version'))
     if config.has_option(SECTION, OPTION_PARAM_THEME_VERSION):
         _update_param_theme_version(config, manifest_file, version)
 

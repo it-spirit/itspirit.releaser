@@ -4,7 +4,7 @@ Changelog
 0.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Add postrelease hook to change 'theme_version' param back to development version.
 
 
 0.5.1 (2017-10-11)
