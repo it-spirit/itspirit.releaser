@@ -4,7 +4,7 @@ Changelog
 0.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Set correct folder name before doing zip export.
 
 
 0.6 (2017-10-31)

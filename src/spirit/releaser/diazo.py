@@ -90,14 +90,16 @@ def release_diazo(data):
 
     package_name = data.get('name')
     tmp_folder = tempfile.mkdtemp()
-    diazo_folder = os.path.join(tmp_folder, package_name)
-    shutil.copytree(path, diazo_folder)
-    update_manifest(config, diazo_folder, package_name)
 
     if config.has_option(SECTION, OPTION_THEME_NAME):
         zip_name = config.get(SECTION, OPTION_THEME_NAME)
     else:
         zip_name = package_name
+
+    diazo_folder = os.path.join(tmp_folder, zip_name)
+    shutil.copytree(path, diazo_folder)
+    update_manifest(config, diazo_folder, package_name)
+
     create_zipfile(tmp_folder, data.get('workingdir'), zip_name)
     shutil.rmtree(tmp_folder)
 
