@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.7 (unreleased)
-----------------
+0.6.1 (2017-11-03)
+------------------
 
 - Set correct folder name before doing zip export.
 
