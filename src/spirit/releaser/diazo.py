@@ -98,22 +98,22 @@ def release_diazo(data):
 
     diazo_folder = os.path.join(tmp_folder, zip_name)
     shutil.copytree(path, diazo_folder)
-    update_manifest(config, diazo_folder, package_name)
+    update_manifest(data, config, diazo_folder, package_name)
 
     create_zipfile(tmp_folder, data.get('workingdir'), zip_name)
     shutil.rmtree(tmp_folder)
 
 
-def update_manifest(config, diazo_folder, package_name):
+def update_manifest(data, config, diazo_folder, package_name):
     """Update the manifest file."""
     manifest_file = os.path.join(diazo_folder, 'manifest.cfg')
     has_manifest = os.path.exists(manifest_file)
     if has_manifest:
         if config.has_option(SECTION, OPTION_TITLE_UPDATE):
-            _update_title(config, manifest_file, package_name)
+            _update_title(data, config, manifest_file, package_name)
 
 
-def _update_title(config, manifest_file, package_name):
+def _update_title(data, config, manifest_file, package_name):
     """Update the title of the theme."""
     try:
         do_update = config.getboolean(SECTION, OPTION_TITLE_UPDATE)
@@ -125,7 +125,9 @@ def _update_title(config, manifest_file, package_name):
 
     manifest = ConfigParser()
     manifest.read(manifest_file)
-    version = pkg_resources.get_distribution(package_name).version
+    version = data.get('version')
+    if version is None:
+        version = pkg_resources.get_distribution(package_name).version
     title = manifest.get('theme', 'title')
     manifest.set('theme', 'title', ' '.join([title, version]))
     with open(manifest_file, 'wb') as configfile:

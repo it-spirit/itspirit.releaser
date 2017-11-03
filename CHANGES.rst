@@ -4,7 +4,7 @@ Changelog
 0.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Use correct version number within a release.
 
 
 0.6.1 (2017-11-03)
