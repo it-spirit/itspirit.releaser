@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.7 (unreleased)
-----------------
+0.6.2 (2017-11-03)
+------------------
 
 - Use correct version number within a release.
 
