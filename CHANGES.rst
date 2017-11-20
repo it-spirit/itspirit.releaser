@@ -4,7 +4,7 @@ Changelog
 0.6.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Add support for multiple diazo themes in one package.
 
 
 0.6.2 (2017-11-03)

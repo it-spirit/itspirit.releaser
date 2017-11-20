@@ -18,17 +18,11 @@ This can be used when we don't have the permission to install our theme on the s
 Use the following options in your ``setup.cfg`` to enable the ZIP file export::
 
     [spirit.releaser]
-    diazo_export.enabled = 1
+    diazo_export.enabled = true
     diazo_export.path = src/my/package/theme
-    diazo_export.adjust_title = 1
-    diazo_export.adjust_theme_version = 1
+    diazo_export.adjust_title = true
+    diazo_export.adjust_theme_version = true
     diazo_export.theme_name = mypackage
-
-diazo_export.enabled
-    Activate or deactivate the export.
-
-diazo_export.path
-    Path relative from the package root to the folder containing the diazo resource files.
 
 diazo_export.adjust_title
     Append the version number of the package to the title in the zipped ``manifest.cfg`` file.
@@ -36,9 +30,40 @@ diazo_export.adjust_title
 diazo_export.adjust_theme_version
     Add or update the ``theme_version`` parameter with the current version number of the package.
 
+diazo_export.enabled
+    Activate or deactivate the export.
+    It can be used in the default and multi-theme settings.
+
+diazo_export.multi
+    Define multiple subsections for diazo themes.
+    Multi-theme sections must start with `spirit.releaser:`, followed by the identifier for that theme.
+
+diazo_export.path
+    Path relative from the package root to the folder containing the diazo resource files.
+    It can be used in the default and multi-theme settings.
+
 diazo_export.theme_name
     Add a custom name for the theme folder and exported zip file.
     Use this is you have a different name (id) for your theme, e.g. 'mypackage' instead of 'my.package'.
+    It can be used in the default and multi-theme settings.
+
+To export more than one diazo theme from a package you can use the `diazo_export.multi` option::
+
+    [spirit.releaser]
+    diazo_export.multi =
+        theme
+        custom
+    diazo_export.enabled = true
+    diazo_export.adjust_title = true
+    diazo_export.adjust_theme_version = true
+
+    [spirit.releaser:theme]
+    diazo_export.path = src/my/package/theme
+    diazo_export.theme_name = mypackage
+
+    [spirit.releaser:custom]
+    diazo_export.path = src/my/package/theme-custom
+    diazo_export.theme_name = mypackage-custom
 
 
 Installation

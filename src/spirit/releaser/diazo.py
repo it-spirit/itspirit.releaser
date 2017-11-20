@@ -3,6 +3,7 @@
 
 # python imports
 from ConfigParser import ConfigParser
+from ConfigParser import NoOptionError
 from zest.releaser import utils
 import logging
 import os
@@ -26,13 +27,13 @@ OPTION_THEME_NAME = 'diazo_export.theme_name'
 
 def _check_config(data):
     if not os.path.exists(SETUP_CONFIG_FILE):
-        return False
+        return None
 
     config = ConfigParser()
     config.read(SETUP_CONFIG_FILE)
 
     if not config.has_option(SECTION, OPTION_ENABLED):
-        return False, None
+        return None
 
     try:
         enabled = config.getboolean(SECTION, OPTION_ENABLED)
@@ -40,40 +41,71 @@ def _check_config(data):
         pass
 
     if not enabled:
-        return False, None
+        return None
 
-    if not config.has_option(SECTION, OPTION_DIAZO_PATH):
-        return False, None
+    return config
 
-    path = config.get(SECTION, OPTION_DIAZO_PATH)
+
+def _get_diazo_path(config, section):
+    try:
+        enabled = config.getboolean(section, OPTION_ENABLED)
+    except (NoOptionError, ValueError):
+        enabled = config.getboolean(SECTION, OPTION_ENABLED)
+
+    if not enabled:
+        return None
+
+    if not config.has_option(section, OPTION_DIAZO_PATH):
+        return None
+
+    path = config.get(section, OPTION_DIAZO_PATH)
     if path is None:
-        return False, path
+        return path
 
     if not os.path.exists(path):
         logger.warning(
             'Configured diazo path "{0}" does not exist.'.format(path)
         )
-        return False, path
+        return None
 
-    return config, path
+    return path
 
 
 def update_version(data):
     """Update the version number."""
-    config, path = _check_config(data)
+    config = _check_config(data)
     if not config:
         return
 
-    workingdir = data.get('workingdir')
-    diazo_folder = os.path.join(workingdir, path)
-    manifest_file = os.path.join(diazo_folder, 'manifest.cfg')
-    has_manifest = os.path.exists(manifest_file)
-    if not has_manifest:
-        return
+    if config.has_option(SECTION, 'diazo_export.multi'):
+        multiple = True
+        parts = config.get(SECTION, 'diazo_export.multi').split()
+    else:
+        parts = ['__default__']
+        multiple = False
 
-    version = data.get('dev_version', data.get('new_version'))
-    if config.has_option(SECTION, OPTION_PARAM_THEME_VERSION):
-        _update_param_theme_version(config, manifest_file, version)
+    for part in parts:
+        if multiple:
+            section = '{0}:{1}'.format(SECTION, part)
+        else:
+            section = SECTION
+
+        if not config.has_section(section):
+            continue
+        path = _get_diazo_path(config, section)
+        if not path:
+            continue
+
+        workingdir = data.get('workingdir')
+        diazo_folder = os.path.join(workingdir, path)
+        manifest_file = os.path.join(diazo_folder, 'manifest.cfg')
+        has_manifest = os.path.exists(manifest_file)
+        if not has_manifest:
+            return
+
+        version = data.get('dev_version', data.get('new_version'))
+        if config.has_option(SECTION, OPTION_PARAM_THEME_VERSION):
+            _update_param_theme_version(config, manifest_file, version)
 
 
 def release_diazo(data):
@@ -81,7 +113,7 @@ def release_diazo(data):
     if not os.path.exists(SETUP_CONFIG_FILE):
         return
 
-    config, path = _check_config(data)
+    config = _check_config(data)
     if not config:
         return
 
@@ -89,19 +121,38 @@ def release_diazo(data):
         return
 
     package_name = data.get('name')
-    tmp_folder = tempfile.mkdtemp()
 
-    if config.has_option(SECTION, OPTION_THEME_NAME):
-        zip_name = config.get(SECTION, OPTION_THEME_NAME)
+    if config.has_option(SECTION, 'diazo_export.multi'):
+        multiple = True
+        parts = config.get(SECTION, 'diazo_export.multi').split()
     else:
-        zip_name = package_name
+        parts = ['__default__']
+        multiple = False
 
-    diazo_folder = os.path.join(tmp_folder, zip_name)
-    shutil.copytree(path, diazo_folder)
-    update_manifest(data, config, diazo_folder, package_name)
+    for part in parts:
+        if multiple:
+            section = '{0}:{1}'.format(SECTION, part)
+        else:
+            section = SECTION
 
-    create_zipfile(tmp_folder, data.get('workingdir'), zip_name)
-    shutil.rmtree(tmp_folder)
+        if not config.has_section(section):
+            continue
+        path = _get_diazo_path(config, section)
+        if not path:
+            continue
+
+        tmp_folder = tempfile.mkdtemp()
+        if config.has_option(section, OPTION_THEME_NAME):
+            zip_name = config.get(section, OPTION_THEME_NAME)
+        else:
+            zip_name = package_name
+
+        diazo_folder = os.path.join(tmp_folder, zip_name)
+        shutil.copytree(path, diazo_folder)
+        update_manifest(data, config, diazo_folder, package_name)
+
+        create_zipfile(tmp_folder, data.get('workingdir'), zip_name)
+        shutil.rmtree(tmp_folder)
 
 
 def update_manifest(data, config, diazo_folder, package_name):
