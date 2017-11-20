@@ -18,11 +18,12 @@ logger = logging.getLogger(__name__)
 
 SETUP_CONFIG_FILE = 'setup.cfg'
 SECTION = 'spirit.releaser'
-OPTION_ENABLED = 'diazo_export.enabled'
 OPTION_DIAZO_PATH = 'diazo_export.path'
-OPTION_TITLE_UPDATE = 'diazo_export.adjust_title'
+OPTION_ENABLED = 'diazo_export.enabled'
 OPTION_PARAM_THEME_VERSION = 'diazo_export.adjust_theme_version'
 OPTION_THEME_NAME = 'diazo_export.theme_name'
+OPTION_TITLE_UPDATE = 'diazo_export.adjust_title'
+OPTION_FILES_EXCLUDED = 'diazo_export.exclude'
 
 
 def _check_config(data):
@@ -148,7 +149,14 @@ def release_diazo(data):
             zip_name = package_name
 
         diazo_folder = os.path.join(tmp_folder, zip_name)
-        shutil.copytree(path, diazo_folder)
+        excluded = None
+        if config.has_option(SECTION, OPTION_FILES_EXCLUDED):
+            excluded = config.get(SECTION, OPTION_FILES_EXCLUDED).split()
+        shutil.copytree(
+            path,
+            diazo_folder,
+            ignore=shutil.ignore_patterns(*excluded),
+        )
         update_manifest(data, config, diazo_folder, package_name)
 
         create_zipfile(tmp_folder, data.get('workingdir'), zip_name)

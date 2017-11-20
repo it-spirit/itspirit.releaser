@@ -23,6 +23,9 @@ Use the following options in your ``setup.cfg`` to enable the ZIP file export::
     diazo_export.adjust_title = true
     diazo_export.adjust_theme_version = true
     diazo_export.theme_name = mypackage
+    diazo_export.exclude =
+        node_modules
+        _less
 
 diazo_export.adjust_title
     Append the version number of the package to the title in the zipped ``manifest.cfg`` file.
@@ -33,6 +36,9 @@ diazo_export.adjust_theme_version
 diazo_export.enabled
     Activate or deactivate the export.
     It can be used in the default and multi-theme settings.
+
+diazo_export.exclude
+    Exclude the listed folders/files from the diazo export.
 
 diazo_export.multi
     Define multiple subsections for diazo themes.

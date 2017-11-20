@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 - Add support for multiple diazo themes in one package.
+- Add support for excluding files/folders from zipped diazo themes.
 
 
 0.6.2 (2017-11-03)
