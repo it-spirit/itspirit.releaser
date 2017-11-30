@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """Plugins for zest.releaser for Diazo themes."""
 
-# python imports
 from ConfigParser import ConfigParser
 from ConfigParser import NoOptionError
 from zest.releaser import utils
+
 import logging
 import os
 import pkg_resources
