@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.8 (unreleased)
-----------------
+0.7.1 (2017-11-30)
+------------------
 
 - Set correct initial value for exclude list.
   [tmassman]
