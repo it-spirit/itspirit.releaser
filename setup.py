@@ -29,7 +29,6 @@ setup(
         "Natural Language :: English",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",
         "Topic :: Software Development :: Code Generators",
         "Topic :: Utilities",
@@ -55,7 +54,6 @@ setup(
             'mock',
             'nose',
             'nose-selecttests',
-            'unittest2',
         ]
     },
     entry_points={
