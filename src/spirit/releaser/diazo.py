@@ -149,7 +149,7 @@ def release_diazo(data):
             zip_name = package_name
 
         diazo_folder = os.path.join(tmp_folder, zip_name)
-        excluded = None
+        excluded = []
         if config.has_option(SECTION, OPTION_FILES_EXCLUDED):
             excluded = config.get(SECTION, OPTION_FILES_EXCLUDED).split()
         shutil.copytree(
