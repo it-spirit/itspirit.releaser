@@ -1,0 +1,24 @@
+language: python
+sudo: false
+cache:
+  directories:
+  - eggs
+  - downloads
+python:
+  - 2.7
+matrix:
+  fast_finish: true
+install:
+  - pip install -r requirements.txt
+  - buildout -N buildout:download-cache=downloads code-analysis:return-status-codes=True annotate
+  - buildout -N buildout:download-cache=downloads code-analysis:return-status-codes=True
+script:
+  - bin/code-analysis
+  - bin/test
+after_success:
+  - bin/createcoverage
+  - pip install coveralls
+  - coveralls
+notifications:
+  email:
+    - development@it-spir.it
