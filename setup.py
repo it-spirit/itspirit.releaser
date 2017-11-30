@@ -23,6 +23,7 @@ setup(
     description=description,
     long_description=long_description,
     classifiers=[
+        "Development Status :: 5 - Production/Stable",
         "Environment :: Console",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: BSD License",
