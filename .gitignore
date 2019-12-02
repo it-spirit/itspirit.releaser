@@ -14,3 +14,5 @@ downloads/
 eggs/
 parts/
 var/
+.venv
+.vscode
