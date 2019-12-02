@@ -4,18 +4,19 @@
 from setuptools import find_packages
 from setuptools import setup
 
+
 version = '0.8.dev0'
 description = 'Plugins for release automation with zest.releaser.'
-long_description = ('\n'.join([
+long_description = '\n\n'.join([
     open('README.rst').read(),
     open('CHANGES.rst').read(),
-]))
+])
 
 install_requires = [
     'setuptools',
     # -*- Extra requirements: -*-
     'six',
-    'zest.releaser[recommended]',
+    'zest.releaser',
 ]
 
 setup(
