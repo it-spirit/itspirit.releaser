@@ -4,7 +4,7 @@ Changelog
 0.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Python3 compatibility.
 
 
 0.7.1 (2017-11-30)
