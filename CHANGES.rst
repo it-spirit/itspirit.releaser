@@ -1,15 +1,10 @@
 Changelog
 =========
 
-0.9 (unreleased)
+0.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
-
-
-0.8 (2019-12-02)
-----------------
-
+- Fix open mode.
 - Python3 compatibility.
 
 
