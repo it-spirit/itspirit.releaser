@@ -14,6 +14,7 @@ long_description = ('\n'.join([
 install_requires = [
     'setuptools',
     # -*- Extra requirements: -*-
+    'six',
     'zest.releaser[recommended]',
 ]
 

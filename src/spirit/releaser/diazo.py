@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Plugins for zest.releaser for Diazo themes."""
 
-from ConfigParser import ConfigParser
-from ConfigParser import NoOptionError
+from six.moves.configparser import ConfigParser
+from six.moves.configparser import NoOptionError
 from zest.releaser import utils
 
 import logging
