@@ -189,7 +189,7 @@ def _update_title(data, config, manifest_file, package_name):
         version = pkg_resources.get_distribution(package_name).version
     title = manifest.get('theme', 'title')
     manifest.set('theme', 'title', ' '.join([title, version]))
-    with open(manifest_file, 'wb') as configfile:
+    with open(manifest_file, 'w') as configfile:
         manifest.write(configfile)
 
 
@@ -212,7 +212,7 @@ def _update_param_theme_version(config, manifest_file, version):
         'theme_version',
         'string:{0}'.format(version),
     )
-    with open(manifest_file, 'wb') as configfile:
+    with open(manifest_file, 'w') as configfile:
         manifest.write(configfile)
 
 
